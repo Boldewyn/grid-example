@@ -1,0 +1,121 @@
+/* set-up */
+section {
+  background: #edbf04;
+  position: relative;
+}
+
+section:before {
+  content: attr(id);
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  line-height: 1;
+}
+
+section + section {
+  margin-top: 10px;
+}
+
+div {
+  height: 49vw;
+  width: 50%;
+  background: #ed4502;
+}
+div + div {
+  background: #6dbf02;
+}
+
+/* floating solution
+ *
+ * Disadvantage: Container collapses without further
+ * tweaking like height or overflow:hidden.
+ */
+#float {
+  height: 49vw;
+}
+
+#float div {
+  float: left;
+}
+
+/* inline-block solution
+ *
+ * Disadvantage: white space between elements and line
+ * height of container become significant.
+ */
+#inline {
+  line-height: 0;
+}
+
+#inline div {
+  display: inline-block;
+}
+
+/* flexbox solution
+ *
+ * Disadvantage: all-or-nothing solution. All children of
+ * the container become flex children.
+ */
+#flex {
+  display: flex;
+}
+
+/* margin tweaking solution
+ *
+ * Disadvantage: You have to know the exact measure of the
+ * "left" element.
+ */
+#margin div + div {
+  margin-top: -49vw;
+  margin-left: 50%;
+}
+
+/* fake table solution
+ *
+ * Disadvantage: all-or-nothing like flexbox. Also some of
+ * the quirky behaviour of tables (like dynamic width etc.)
+ */
+#table {
+  display: table;
+  width: 100%;
+}
+#table div {
+  display: table-cell;
+}
+
+/* tweaking position solution
+ *
+ * Disadvantage: Elements do not "auto-adjust", if the width
+ * of one of them changes. Container collapses.
+ */
+#position {
+  position: relative;
+  height: 49vw;
+}
+#position div {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#position div + div {
+  left: auto;
+  right: 0;
+}
+
+/* CSS grid solution
+ *
+ * Disadvantage: Well, browser support, <http://caniuse.com/#feat=css-grid>.
+ * Otherwise, that'd be the gold standard of these solutions.
+ */
+#grid {
+  display: grid;
+  grid-template-areas: "left right";
+}
+#grid div {
+  grid-area: left;
+  width: auto;
+}
+#grid div + div {
+  grid-area: right;
+}
